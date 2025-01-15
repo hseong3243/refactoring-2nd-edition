@@ -5,7 +5,7 @@ import org.seong.refactoring2ndedition.dto.Play
 import org.seong.refactoring2ndedition.dto.getInvoices
 import org.seong.refactoring2ndedition.dto.getPlayMap
 
-class Refactoring2ndEditionApplication
+class Application
 
 fun main() {
     val invoices = getInvoices()
