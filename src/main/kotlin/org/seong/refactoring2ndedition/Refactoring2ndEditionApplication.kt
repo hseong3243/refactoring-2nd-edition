@@ -2,19 +2,28 @@ package org.seong.refactoring2ndedition
 
 import org.seong.refactoring2ndedition.dto.Invoice
 import org.seong.refactoring2ndedition.dto.Play
+import org.seong.refactoring2ndedition.dto.getInvoices
+import org.seong.refactoring2ndedition.dto.getPlayMap
 
 class Refactoring2ndEditionApplication
 
 fun main() {
+    val invoices = getInvoices()
+    val playMap = getPlayMap()
 
-
-
+    for (invoice in invoices) {
+        val result = statement(invoice, playMap)
+        println(result)
+    }
 }
 
 fun statement(invoice: Invoice, plays: Map<String, Play>): String {
     var totalAmount = 0
     var volumeCredits = 0
-    var result = "청구 내역 (고객명: ${invoice.customer}\n"
+    var result = "청구 내역 (고객명: ${invoice.customer})\n"
+    fun format(totalAmount: Int): String {
+        return String.format("$${totalAmount.toDouble()}")
+    }
 
     for (perf in invoice.performances) {
         val play = plays.get(perf.playID)
@@ -35,6 +44,7 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
                 }
                 thisAmount += 300 * perf.audience
             }
+
             else -> {
                 throw Exception("알 수 없는 장르: ${play.type}")
             }
@@ -43,13 +53,14 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
         // 포인트를 적립한다.
         volumeCredits += Math.max(perf.audience - 30, 0)
         // 희극 관객 5명마다 추가 포인트를 제공한다.
-        if ("comedy" == play.type) volumeCredits += Math.floor((perf.audience / 5).toDouble()).toInt();
+        if ("comedy" == play.type) volumeCredits += Math.floor((perf.audience / 5).toDouble())
+            .toInt();
 
         // 청구 내역을 출력한다.
-        result += " ${play.name}: ${thisAmount/100} (${perf.audience}석)\n"
+        result += " ${play.name}: ${format(thisAmount / 100)} (${perf.audience}석)\n"
         totalAmount += thisAmount
     }
-    result += "총액: ${totalAmount/100}\n"
+    result += "총액: ${format(totalAmount / 100)}\n"
     result += "적립 포인트: ${volumeCredits}점\n"
     return result;
 }
