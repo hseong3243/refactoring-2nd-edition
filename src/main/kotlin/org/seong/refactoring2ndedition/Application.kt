@@ -44,12 +44,12 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
         }
         return result
     }
-    fun volumeCreditsFor(perf: Performance): Int {
-        var volumeCredits = Math.max(perf.audience - 30, 0)
+    fun volumeCreditsFor(aPerformance: Performance): Int {
+        var result = Math.max(aPerformance.audience - 30, 0)
         // 희극 관객 5명마다 추가 포인트를 제공한다.
-        if ("comedy" == playFor(perf)?.type)
-            volumeCredits += Math.floor((perf.audience / 5).toDouble()).toInt();
-        return volumeCredits;
+        if ("comedy" == playFor(aPerformance)?.type)
+            result += Math.floor((aPerformance.audience / 5).toDouble()).toInt();
+        return result;
     }
 
     var totalAmount = 0
