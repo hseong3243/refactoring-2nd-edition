@@ -58,18 +58,24 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
         return String.format("$${aNumber / 100.0}")
     }
 
+    fun totalVolumeCredits(): Int {
+        var result = 0
+        for (perf in invoice.performances) {
+            result += volumeCreditsFor(perf)
+        }
+        return result;
+    }
+
     var totalAmount = 0
-    var volumeCredits = 0
     var result = "청구 내역 (고객명: ${invoice.customer})\n"
 
     for (perf in invoice.performances) {
-        volumeCredits += volumeCreditsFor(perf)
 
         // 청구 내역을 출력한다.
         result += " ${playFor(perf)?.name}: ${usd(amountFor(perf))} (${perf.audience}석)\n"
         totalAmount += amountFor(perf)
     }
     result += "총액: ${usd(totalAmount)}\n"
-    result += "적립 포인트: ${volumeCredits}점\n"
+    result += "적립 포인트: ${totalVolumeCredits()}점\n"
     return result;
 }
