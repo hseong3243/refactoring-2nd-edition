@@ -51,9 +51,18 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
         return result
     }
 
+    fun volumeCreditsFor(aPerformance: Performance): Int {
+        var result = Math.max(aPerformance.audience - 30, 0)
+        // 희극 관객 5명마다 추가 포인트를 제공한다.
+        if ("comedy" == aPerformance.play?.type)
+            result += Math.floor((aPerformance.audience / 5).toDouble()).toInt();
+        return result;
+    }
+
     fun enrichPerformance(performance: Performance): Performance {
         performance.play = playFor(performance)
         performance.amount = amountFor(performance)
+        performance.volumeCredits = volumeCreditsFor(performance)
         return performance
     }
 
@@ -70,14 +79,6 @@ private fun renderPlainText(
     data: Data
 ): String {
 
-    fun volumeCreditsFor(aPerformance: Performance): Int {
-        var result = Math.max(aPerformance.audience - 30, 0)
-        // 희극 관객 5명마다 추가 포인트를 제공한다.
-        if ("comedy" == aPerformance.play?.type)
-            result += Math.floor((aPerformance.audience / 5).toDouble()).toInt();
-        return result;
-    }
-
     fun usd(aNumber: Int): String {
         return String.format("$${aNumber / 100.0}")
     }
@@ -93,7 +94,7 @@ private fun renderPlainText(
     fun totalVolumeCredits(): Int {
         var result = 0
         for (perf in data.performances) {
-            result += volumeCreditsFor(perf)
+            result += perf.volumeCredits
         }
         return result;
     }
