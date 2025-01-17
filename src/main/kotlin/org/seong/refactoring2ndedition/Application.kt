@@ -30,17 +30,12 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
         it.play = playFor(it)
         it
     }
-    return renderPlainText(data, plays)
+    return renderPlainText(data)
 }
 
 private fun renderPlainText(
-    data: Data,
-    plays: Map<String, Play>
+    data: Data
 ): String {
-    fun playFor(aPerformance: Performance): Play? {
-        return plays[aPerformance.playID]
-    }
-
     fun amountFor(
         aPerformance: Performance
     ): Int {
@@ -62,7 +57,7 @@ private fun renderPlainText(
             }
 
             else -> {
-                throw Exception("알 수 없는 장르: ${playFor(aPerformance)?.type}")
+                throw Exception("알 수 없는 장르: ${aPerformance.play?.type}")
             }
         }
         return result
@@ -71,7 +66,7 @@ private fun renderPlainText(
     fun volumeCreditsFor(aPerformance: Performance): Int {
         var result = Math.max(aPerformance.audience - 30, 0)
         // 희극 관객 5명마다 추가 포인트를 제공한다.
-        if ("comedy" == playFor(aPerformance)?.type)
+        if ("comedy" == aPerformance.play?.type)
             result += Math.floor((aPerformance.audience / 5).toDouble()).toInt();
         return result;
     }
@@ -100,7 +95,7 @@ private fun renderPlainText(
     var result = "청구 내역 (고객명: ${data.customer})\n"
     for (perf in data.performances) {
         // 청구 내역을 출력한다.
-        result += " ${playFor(perf)?.name}: ${usd(amountFor(perf))} (${perf.audience}석)\n"
+        result += " ${perf.play?.name}: ${usd(amountFor(perf))} (${perf.audience}석)\n"
 
     }
     result += "총액: ${usd(totalAmount())}\n"
