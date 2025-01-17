@@ -10,7 +10,7 @@ data class Invoice(
 )
 
 @Serializable
-data class Performance(val playID: String, val audience: Int)
+data class Performance(val playID: String, val audience: Int, var play: Play? = null)
 
 fun getInvoices(): List<Invoice> {
     return Json.decodeFromString<List<Invoice>>(invoicesJson)

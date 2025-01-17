@@ -20,9 +20,16 @@ private data class Data(
 )
 
 fun statement(invoice: Invoice, plays: Map<String, Play>): String {
+    fun playFor(aPerformance: Performance): Play? {
+        return plays[aPerformance.playID]
+    }
+
     val data = Data()
     data.customer = invoice.customer
-    data.performances = invoice.performances
+    data.performances = invoice.performances.map {
+        it.play = playFor(it)
+        it
+    }
     return renderPlainText(data, plays)
 }
 
@@ -38,7 +45,7 @@ private fun renderPlainText(
         aPerformance: Performance
     ): Int {
         var result = 0
-        when (playFor(aPerformance)?.type) {
+        when (aPerformance.play?.type) {
             "tragedy" -> { // 비극
                 result = 40000
                 if (aPerformance.audience > 30) {
