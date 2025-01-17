@@ -24,18 +24,6 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
         return plays[aPerformance.playID]
     }
 
-    val data = Data()
-    data.customer = invoice.customer
-    data.performances = invoice.performances.map {
-        it.play = playFor(it)
-        it
-    }
-    return renderPlainText(data)
-}
-
-private fun renderPlainText(
-    data: Data
-): String {
     fun amountFor(
         aPerformance: Performance
     ): Int {
@@ -63,6 +51,25 @@ private fun renderPlainText(
         return result
     }
 
+    fun enrichPerformance(performance: Performance): Performance {
+        performance.play = playFor(performance)
+        performance.amount = amountFor(performance)
+        return performance
+    }
+
+    val data = Data()
+    data.customer = invoice.customer
+    data.performances = invoice.performances.map {
+        enrichPerformance(it)
+    }
+    return renderPlainText(data)
+}
+
+
+private fun renderPlainText(
+    data: Data
+): String {
+
     fun volumeCreditsFor(aPerformance: Performance): Int {
         var result = Math.max(aPerformance.audience - 30, 0)
         // 희극 관객 5명마다 추가 포인트를 제공한다.
@@ -78,7 +85,7 @@ private fun renderPlainText(
     fun totalAmount(): Int {
         var result = 0
         for (perf in data.performances) {
-            result += amountFor(perf)
+            result += perf.amount
         }
         return result
     }
@@ -95,7 +102,7 @@ private fun renderPlainText(
     var result = "청구 내역 (고객명: ${data.customer})\n"
     for (perf in data.performances) {
         // 청구 내역을 출력한다.
-        result += " ${perf.play?.name}: ${usd(amountFor(perf))} (${perf.audience}석)\n"
+        result += " ${perf.play?.name}: ${usd(perf.amount)} (${perf.audience}석)\n"
 
     }
     result += "총액: ${usd(totalAmount())}\n"
