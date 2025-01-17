@@ -14,9 +14,11 @@ fun main() {
     }
 }
 
-private data class Data(
+private data class StatementData(
     var customer: String = "",
-    var performances: List<Performance> = emptyList()
+    var performances: List<Performance> = emptyList(),
+    var totalAmount: Int = 0,
+    var totalVolumeCredits: Int = 0
 )
 
 fun statement(invoice: Invoice, plays: Map<String, Play>): String {
@@ -59,6 +61,22 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
         return result;
     }
 
+    fun totalVolumeCredits(statementData: StatementData): Int {
+        var result = 0
+        for (perf in statementData.performances) {
+            result += perf.volumeCredits
+        }
+        return result;
+    }
+
+    fun totalAmount(statementData: StatementData): Int {
+        var result = 0
+        for (perf in statementData.performances) {
+            result += perf.amount
+        }
+        return result
+    }
+
     fun enrichPerformance(performance: Performance): Performance {
         performance.play = playFor(performance)
         performance.amount = amountFor(performance)
@@ -66,48 +84,33 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
         return performance
     }
 
-    val data = Data()
-    data.customer = invoice.customer
-    data.performances = invoice.performances.map {
+    val statementData = StatementData()
+    statementData.customer = invoice.customer
+    statementData.performances = invoice.performances.map {
         enrichPerformance(it)
     }
-    return renderPlainText(data)
+    statementData.totalAmount = totalAmount(statementData)
+    statementData.totalVolumeCredits = totalVolumeCredits(statementData)
+    return renderPlainText(statementData)
 }
 
 
 private fun renderPlainText(
-    data: Data
+    statementData: StatementData
 ): String {
 
     fun usd(aNumber: Int): String {
         return String.format("$${aNumber / 100.0}")
     }
 
-    fun totalAmount(): Int {
-        var result = 0
-        for (perf in data.performances) {
-            result += perf.amount
-        }
-        return result
-    }
-
-    fun totalVolumeCredits(): Int {
-        var result = 0
-        for (perf in data.performances) {
-            result += perf.volumeCredits
-        }
-        return result;
-    }
-
-
-    var result = "청구 내역 (고객명: ${data.customer})\n"
-    for (perf in data.performances) {
+    var result = "청구 내역 (고객명: ${statementData.customer})\n"
+    for (perf in statementData.performances) {
         // 청구 내역을 출력한다.
         result += " ${perf.play?.name}: ${usd(perf.amount)} (${perf.audience}석)\n"
 
     }
-    result += "총액: ${usd(totalAmount())}\n"
-    result += "적립 포인트: ${totalVolumeCredits()}점\n"
+    result += "총액: ${usd(statementData.totalAmount)}\n"
+    result += "적립 포인트: ${statementData.totalVolumeCredits}점\n"
     return result;
 }
 
