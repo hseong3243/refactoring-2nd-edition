@@ -22,6 +22,13 @@ private data class StatementData(
 )
 
 fun statement(invoice: Invoice, plays: Map<String, Play>): String {
+    return renderPlainText(createStatementData(plays, invoice))
+}
+
+private fun createStatementData(
+    plays: Map<String, Play>,
+    invoice: Invoice
+): StatementData {
     fun playFor(aPerformance: Performance): Play? {
         return plays[aPerformance.playID]
     }
@@ -83,7 +90,7 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
     }
     statementData.totalAmount = totalAmount(statementData)
     statementData.totalVolumeCredits = totalVolumeCredits(statementData)
-    return renderPlainText(statementData)
+    return statementData
 }
 
 
