@@ -14,7 +14,22 @@ fun main() {
     }
 }
 
+private data class Data(
+    var customer: String = "",
+    var performances: List<Performance> = emptyList()
+)
+
 fun statement(invoice: Invoice, plays: Map<String, Play>): String {
+    val data = Data()
+    data.customer = invoice.customer
+    data.performances = invoice.performances
+    return renderPlainText(data, plays)
+}
+
+private fun renderPlainText(
+    data: Data,
+    plays: Map<String, Play>
+): String {
     fun playFor(aPerformance: Performance): Play? {
         return plays[aPerformance.playID]
     }
@@ -60,7 +75,7 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
 
     fun totalAmount(): Int {
         var result = 0
-        for (perf in invoice.performances) {
+        for (perf in data.performances) {
             result += amountFor(perf)
         }
         return result
@@ -68,15 +83,15 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
 
     fun totalVolumeCredits(): Int {
         var result = 0
-        for (perf in invoice.performances) {
+        for (perf in data.performances) {
             result += volumeCreditsFor(perf)
         }
         return result;
     }
 
 
-    var result = "청구 내역 (고객명: ${invoice.customer})\n"
-    for (perf in invoice.performances) {
+    var result = "청구 내역 (고객명: ${data.customer})\n"
+    for (perf in data.performances) {
         // 청구 내역을 출력한다.
         result += " ${playFor(perf)?.name}: ${usd(amountFor(perf))} (${perf.audience}석)\n"
 
