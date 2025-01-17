@@ -61,21 +61,13 @@ fun statement(invoice: Invoice, plays: Map<String, Play>): String {
         return result;
     }
 
-    fun totalVolumeCredits(statementData: StatementData): Int {
-        var result = 0
-        for (perf in statementData.performances) {
-            result += perf.volumeCredits
-        }
-        return result;
-    }
+    fun totalVolumeCredits(data: StatementData): Int =
+        data.performances.map { it.volumeCredits }
+            .reduce { total, volumeCredits -> total + volumeCredits }
 
-    fun totalAmount(statementData: StatementData): Int {
-        var result = 0
-        for (perf in statementData.performances) {
-            result += perf.amount
-        }
-        return result
-    }
+    fun totalAmount(data: StatementData): Int =
+        data.performances.map { it.amount }
+            .reduce { total, amount -> total + amount }
 
     fun enrichPerformance(performance: Performance): Performance {
         performance.play = playFor(performance)
