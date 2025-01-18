@@ -24,13 +24,7 @@ open class PerformanceCalculator(
         var result = 0
         when (this.performance.play?.type) {
             "tragedy" -> throw UnsupportedOperationException("오류 발생")
-            "comedy" -> { // 희극
-                result = 30000;
-                if (this.performance.audience > 20) {
-                    result += 10000 + 500 * (this.performance.audience - 20);
-                }
-                result += 300 * this.performance.audience
-            }
+            "comedy" -> throw UnsupportedOperationException("오류 발생")
 
             else -> {
                 throw Exception("알 수 없는 장르: ${this.performance.play?.type}")
