@@ -3,7 +3,7 @@ package org.seong.refactoring2ndedition
 import org.seong.refactoring2ndedition.dto.Performance
 import org.seong.refactoring2ndedition.dto.Play
 
-open class PerformanceCalculator(
+abstract class PerformanceCalculator(
     val performance: Performance,
     val play: Play
 ) {
@@ -20,18 +20,7 @@ open class PerformanceCalculator(
         }
     }
 
-    open fun amount(): Int {
-        var result = 0
-        when (this.performance.play?.type) {
-            "tragedy" -> throw UnsupportedOperationException("오류 발생")
-            "comedy" -> throw UnsupportedOperationException("오류 발생")
-
-            else -> {
-                throw Exception("알 수 없는 장르: ${this.performance.play?.type}")
-            }
-        }
-        return result
-    }
+    abstract fun amount(): Int
 
     fun volumeCredits(): Int {
         var result = Math.max(this.performance.audience - 30, 0)
