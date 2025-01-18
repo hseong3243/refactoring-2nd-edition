@@ -16,33 +16,6 @@ data class StatementData(
                 return plays[aPerformance.playID]
             }
 
-            fun amountFor(
-                aPerformance: Performance
-            ): Int {
-                var result = 0
-                when (aPerformance.play?.type) {
-                    "tragedy" -> { // 비극
-                        result = 40000
-                        if (aPerformance.audience > 30) {
-                            result += 1000 * (aPerformance.audience - 30)
-                        }
-                    }
-
-                    "comedy" -> { // 희극
-                        result = 30000;
-                        if (aPerformance.audience > 20) {
-                            result += 10000 + 500 * (aPerformance.audience - 20);
-                        }
-                        result += 300 * aPerformance.audience
-                    }
-
-                    else -> {
-                        throw Exception("알 수 없는 장르: ${aPerformance.play?.type}")
-                    }
-                }
-                return result
-            }
-
             fun volumeCreditsFor(aPerformance: Performance): Int {
                 var result = Math.max(aPerformance.audience - 30, 0)
                 // 희극 관객 5명마다 추가 포인트를 제공한다.
@@ -62,7 +35,7 @@ data class StatementData(
             fun enrichPerformance(performance: Performance): Performance {
                 val calculator = PerformanceCalculator(performance, playFor(performance)!!)
                 performance.play = calculator.play
-                performance.amount = amountFor(performance)
+                performance.amount = calculator.amount()
                 performance.volumeCredits = volumeCreditsFor(performance)
                 return performance
             }
