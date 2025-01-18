@@ -1,8 +1,8 @@
-package org.seong.refactoring2ndedition
+package org.seong.refactoring2ndedition.ch1
 
-import org.seong.refactoring2ndedition.dto.Invoice
-import org.seong.refactoring2ndedition.dto.Performance
-import org.seong.refactoring2ndedition.dto.Play
+import org.seong.refactoring2ndedition.ch1.dto.Invoice
+import org.seong.refactoring2ndedition.ch1.dto.Performance
+import org.seong.refactoring2ndedition.ch1.dto.Play
 
 data class StatementData(
     var customer: String = "",

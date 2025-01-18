@@ -2,8 +2,9 @@ package org.seong.refactoring2ndedition
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
-import org.seong.refactoring2ndedition.dto.getInvoices
-import org.seong.refactoring2ndedition.dto.getPlayMap
+import org.seong.refactoring2ndedition.ch1.Statement
+import org.seong.refactoring2ndedition.ch1.dto.getInvoices
+import org.seong.refactoring2ndedition.ch1.dto.getPlayMap
 
 class ApplicationKtTest : BehaviorSpec({
     given("주어진 Json 입력값으로") {

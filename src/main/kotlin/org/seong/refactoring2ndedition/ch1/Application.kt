@@ -1,6 +1,7 @@
-package org.seong.refactoring2ndedition
+package org.seong.refactoring2ndedition.ch1
 
-import org.seong.refactoring2ndedition.dto.*
+import org.seong.refactoring2ndedition.ch1.dto.getInvoices
+import org.seong.refactoring2ndedition.ch1.dto.getPlayMap
 
 class Application
 

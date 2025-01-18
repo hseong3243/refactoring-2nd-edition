@@ -1,4 +1,4 @@
-package org.seong.refactoring2ndedition.dto
+package org.seong.refactoring2ndedition.ch1.dto
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json

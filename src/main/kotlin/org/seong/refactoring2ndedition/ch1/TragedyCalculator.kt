@@ -1,7 +1,7 @@
-package org.seong.refactoring2ndedition
+package org.seong.refactoring2ndedition.ch1
 
-import org.seong.refactoring2ndedition.dto.Performance
-import org.seong.refactoring2ndedition.dto.Play
+import org.seong.refactoring2ndedition.ch1.dto.Performance
+import org.seong.refactoring2ndedition.ch1.dto.Play
 
 class TragedyCalculator(
     performance: Performance,
