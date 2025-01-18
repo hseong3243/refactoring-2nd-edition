@@ -22,11 +22,7 @@ abstract class PerformanceCalculator(
 
     abstract fun amount(): Int
 
-    fun volumeCredits(): Int {
-        var result = Math.max(this.performance.audience - 30, 0)
-        // 희극 관객 5명마다 추가 포인트를 제공한다.
-        if ("comedy" == this.play.type)
-            result += Math.floor((this.performance.audience / 5).toDouble()).toInt();
-        return result;
+    open fun volumeCredits(): Int {
+        return Math.max(this.performance.audience - 30, 0)
     }
 }
