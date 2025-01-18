@@ -25,7 +25,7 @@ data class StatementData(
                     .reduce { total, amount -> total + amount }
 
             fun enrichPerformance(performance: Performance): Performance {
-                val calculator = PerformanceCalculator.createPerformanceCalculator(performance, playFor(performance)!!)
+                val calculator = PerformanceCalculator.create(performance, playFor(performance)!!)
                 performance.play = calculator.play
                 performance.amount = calculator.amount()
                 performance.volumeCredits = calculator.volumeCredits()

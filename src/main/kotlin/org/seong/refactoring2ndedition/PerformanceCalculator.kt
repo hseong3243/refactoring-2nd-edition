@@ -8,7 +8,7 @@ open class PerformanceCalculator(
     val play: Play
 ) {
     companion object {
-        fun createPerformanceCalculator(
+        fun create(
             performance: Performance,
             play: Play
         ): PerformanceCalculator {
