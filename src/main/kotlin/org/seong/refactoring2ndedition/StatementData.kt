@@ -16,14 +16,6 @@ data class StatementData(
                 return plays[aPerformance.playID]
             }
 
-            fun volumeCreditsFor(aPerformance: Performance): Int {
-                var result = Math.max(aPerformance.audience - 30, 0)
-                // 희극 관객 5명마다 추가 포인트를 제공한다.
-                if ("comedy" == aPerformance.play?.type)
-                    result += Math.floor((aPerformance.audience / 5).toDouble()).toInt();
-                return result;
-            }
-
             fun totalVolumeCredits(data: StatementData): Int =
                 data.performances.map { it.volumeCredits }
                     .reduce { total, volumeCredits -> total + volumeCredits }
@@ -36,7 +28,7 @@ data class StatementData(
                 val calculator = PerformanceCalculator(performance, playFor(performance)!!)
                 performance.play = calculator.play
                 performance.amount = calculator.amount()
-                performance.volumeCredits = volumeCreditsFor(performance)
+                performance.volumeCredits = calculator.volumeCredits()
                 return performance
             }
 
