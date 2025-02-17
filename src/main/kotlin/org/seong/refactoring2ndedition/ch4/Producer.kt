@@ -3,9 +3,14 @@ package org.seong.refactoring2ndedition.ch4
 class Producer(
     private var province: Province,
     val name: String,
-    private var cost: Int,
-    private var production: Int,
+    cost: Int,
+    production: Int,
 ) {
+    var production: Int = production
+        private set
+    var cost: Int = cost
+        private set
+
     fun cost(arg: String) {
         this.cost = arg.toInt()
     }
