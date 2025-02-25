@@ -10,11 +10,10 @@ fun main() {
 class PrintOwing {
 
     fun printOwing(invoice: Invoice) {
-        var outstanding = 0;
-
         printBanner()
 
         // 미해결 채무(outstanding)를 계산한다.
+        var outstanding = 0;
         for (o in invoice.orders) {
             outstanding += o.amount
         }
