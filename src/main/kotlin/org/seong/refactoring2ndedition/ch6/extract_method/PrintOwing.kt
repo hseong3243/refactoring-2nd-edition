@@ -42,10 +42,16 @@ data class Order(
     val amount: Int
 )
 
+/**
+ * 시스템 시계를 감싸는 래퍼 클래스
+ * now()와 같이 직접 호출할 경우 테스트할 때 마다 결과가 달라지는 것을 막는다.
+ *
+ * todo: 추후 마틴 파울러의 블로그를 참조하여 어떤 방식으로 막을지 찾아보도록 한다.
+ */
 class Clock {
     companion object {
-        fun today(): LocalDate {
-            return LocalDate.now()
+        fun today(today: LocalDate = LocalDate.now()): LocalDate {
+            return today
         }
     }
 }
