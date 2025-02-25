@@ -12,17 +12,22 @@ class PrintOwing {
     fun printOwing(invoice: Invoice) {
         printBanner()
 
-        // 미해결 채무(outstanding)를 계산한다.
-        var outstanding = 0;
-        for (o in invoice.orders) {
-            outstanding += o.amount
-        }
+        val outstanding = calculateOutstanding(invoice)
 
         // 마감일(dueDate)을 기록한다.
         recordDueDate(invoice)
 
         // 세부 사항을 출력한다.
         printDetails(invoice, outstanding)
+    }
+
+    private fun calculateOutstanding(invoice: Invoice): Int {
+        // 미해결 채무(outstanding)를 계산한다.
+        var outstanding = 0;
+        for (o in invoice.orders) {
+            outstanding += o.amount
+        }
+        return outstanding
     }
 
     private fun printBanner() {
