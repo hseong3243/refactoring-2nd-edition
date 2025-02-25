@@ -11,13 +11,8 @@ class PrintOwing {
 
     fun printOwing(invoice: Invoice) {
         printBanner()
-
         val outstanding = calculateOutstanding(invoice)
-
-        // 마감일(dueDate)을 기록한다.
         recordDueDate(invoice)
-
-        // 세부 사항을 출력한다.
         printDetails(invoice, outstanding)
     }
 
