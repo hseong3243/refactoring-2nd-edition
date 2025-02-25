@@ -20,8 +20,7 @@ class PrintOwing {
         }
 
         // 마감일(dueDate)을 기록한다.
-        val today = Clock.today()
-        invoice.dueDate = LocalDate.of(today.year, today.month, today.dayOfMonth).plusDays(30)
+        recordDueDate(invoice)
 
         // 세부 사항을 출력한다.
         printDetails(invoice, outstanding)
@@ -31,6 +30,11 @@ class PrintOwing {
         println("**********")
         println("** 고객 채무 **")
         println("**********")
+    }
+
+    private fun recordDueDate(invoice: Invoice) {
+        val today = Clock.today()
+        invoice.dueDate = LocalDate.of(today.year, today.month, today.dayOfMonth).plusDays(30)
     }
 
     private fun printDetails(
