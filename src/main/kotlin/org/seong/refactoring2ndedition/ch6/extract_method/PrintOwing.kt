@@ -24,15 +24,22 @@ class PrintOwing {
         invoice.dueDate = LocalDate.of(today.year, today.month, today.dayOfMonth).plusDays(30)
 
         // 세부 사항을 출력한다.
-        println("고객명: ${invoice.customer}")
-        println("채무액: $outstanding")
-        println("마감일: ${invoice.dueDate}")
+        printDetails(invoice, outstanding)
     }
 
     private fun printBanner() {
         println("**********")
         println("** 고객 채무 **")
         println("**********")
+    }
+
+    private fun printDetails(
+        invoice: Invoice,
+        outstanding: Int
+    ) {
+        println("고객명: ${invoice.customer}")
+        println("채무액: $outstanding")
+        println("마감일: ${invoice.dueDate}")
     }
 }
 
