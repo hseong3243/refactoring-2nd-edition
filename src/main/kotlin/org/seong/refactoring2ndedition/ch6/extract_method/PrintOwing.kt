@@ -18,11 +18,11 @@ class PrintOwing {
 
     private fun calculateOutstanding(invoice: Invoice): Int {
         // 미해결 채무(outstanding)를 계산한다.
-        var outstanding = 0;
+        var result = 0;
         for (o in invoice.orders) {
-            outstanding += o.amount
+            result += o.amount
         }
-        return outstanding
+        return result
     }
 
     private fun printBanner() {
