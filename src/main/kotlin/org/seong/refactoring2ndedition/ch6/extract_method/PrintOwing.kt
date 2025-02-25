@@ -12,9 +12,7 @@ class PrintOwing {
     fun printOwing(invoice: Invoice) {
         var outstanding = 0;
 
-        println("**********")
-        println("** 고객 채무 **")
-        println("**********")
+        printBanner()
 
         // 미해결 채무(outstanding)를 계산한다.
         for (o in invoice.orders) {
@@ -29,6 +27,12 @@ class PrintOwing {
         println("고객명: ${invoice.customer}")
         println("채무액: $outstanding")
         println("마감일: ${invoice.dueDate}")
+    }
+
+    private fun printBanner() {
+        println("**********")
+        println("** 고객 채무 **")
+        println("**********")
     }
 }
 
