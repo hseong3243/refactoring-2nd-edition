@@ -4,12 +4,12 @@ class ReportLines {
 
     fun reportLines(aCustomer: Customer) : Map<String, String> {
         val lines = mutableMapOf<String, String>()
+        lines["name"] = aCustomer.name
         gatherCustomerData(lines, aCustomer);
         return lines
     }
 
     private fun gatherCustomerData(out: MutableMap<String, String>, aCustomer: Customer) {
-        out["name"] = aCustomer.name
         out["location"] = aCustomer.location
     }
 }
