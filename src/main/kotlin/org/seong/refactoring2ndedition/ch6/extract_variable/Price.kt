@@ -10,7 +10,7 @@ class Price {
         val basePrice = order.quantity * order.itemPrice
         return basePrice -
                 max(0, order.quantity-500) * order.itemPrice * 0.05 +
-                min(order.quantity * order.itemPrice * 0.1, 100.0)
+                min(basePrice * 0.1, 100.0)
     }
 }
 
