@@ -1,4 +1,4 @@
-package org.seong.refactoring2ndedition.ch6.extract_method
+package org.seong.refactoring2ndedition.ch6.inline_method
 
 class Rating {
 
