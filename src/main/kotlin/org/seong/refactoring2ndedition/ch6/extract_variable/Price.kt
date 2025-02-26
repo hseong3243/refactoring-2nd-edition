@@ -6,10 +6,10 @@ import kotlin.math.min
 class Price {
 
     fun price(order: Order) : Double {
-        // 가격(price) = 기본 가격 - 수량 할인 + 배송비
         val basePrice = order.quantity * order.itemPrice
         val quantityDiscount = max(0, order.quantity - 500) * order.itemPrice * 0.05
-        return basePrice - quantityDiscount + min(basePrice * 0.1, 100.0)
+        val shipping = min(basePrice * 0.1, 100.0)
+        return basePrice - quantityDiscount + shipping
     }
 }
 
