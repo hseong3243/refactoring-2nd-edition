@@ -7,7 +7,8 @@ class Price {
 
     fun price(order: Order) : Double {
         // 가격(price) = 기본 가격 - 수량 할인 + 배송비
-        return order.quantity * order.itemPrice -
+        val basePrice = order.quantity * order.itemPrice
+        return basePrice -
                 max(0, order.quantity-500) * order.itemPrice * 0.05 +
                 min(order.quantity * order.itemPrice * 0.1, 100.0)
     }
